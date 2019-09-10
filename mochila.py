@@ -30,7 +30,7 @@ def fitness(target):
             peso_total += ARTIGOS[index].peso
             volume_total += ARTIGOS[index].volume
         index += 1
-    #Para cada ponto que passar da capacidade total, vai reduzir 4% por ponto, do valor_total
+    #Para cada ponto que passar da capacidade total, vai reduzir porcentagemPenalizacao% por ponto, do valor_total
     if (peso_total > capTotal):
         valor_total = valor_total - (valor_total  * ((peso_total - 125)/100) * porcentagemPenalizacao)
     if (volume_total > capTotal):
