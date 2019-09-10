@@ -1,8 +1,7 @@
 from artigo import Artigo
 import random
 import numpy
-##Para melhores resultados, utilizar o método elitista (nao obtive muito sucesso usando a roleta)
-##
+
 volumes = [6,2,1,8,2,3,5,9,8,8,6,2,7,9,7,10,2,9,1,9,3,9,9,2,4]
 pesos = [2,9,9,7,2,2,3,4,4,7,7,3,7,7,3,4,10,2,5,8,10,2,8,6,7]
 valores = [5,7,8,9,2,6,2,1,8,1,8,10,9,6,2,8,6,5,2,7,8,7,9,5,6]
@@ -14,9 +13,9 @@ capTotal = 125
 popMax = 100
 genMax = 200
 doisPontosCorte = True
-elitista = False
-porcentagemPenalizacao = 1
-paisTamanho = 100*0.6*0.8
+elitista = False #False - Roleta | True - Elitista. Elitista roda mais rapido
+porcentagemPenalizacao = 2
+paisTamanho = popMax*0.6*0.8
 
 def fitness(target):
     valor_total = 0
@@ -32,16 +31,12 @@ def fitness(target):
             volume_total += ARTIGOS[index].volume
         index += 1
     #Para cada ponto que passar da capacidade total, vai reduzir 4% por ponto, do valor_total
-    if (peso_total > capTotal) or (volume_total > capTotal):
-        return valor_total*0.5
-    else:
-        return valor_total
-    ##ARRUMAR
-    ##
-    ##    valor_total = valor_total - (valor_total*capTotal-125/100)
-    ##if (volume_total > capTotal):
-    ##    valor_total = valor_total - (valor_total*volume_total-125/100)
-    ##return valor_total
+    if (peso_total > capTotal):
+        valor_total = valor_total - (valor_total  * ((peso_total - 125)/100) * porcentagemPenalizacao)
+    if (volume_total > capTotal):
+        valor_total = valor_total - (valor_total  * ((volume_total - 125)/100) * porcentagemPenalizacao)
+    return valor_total
+
 
 def criaPopulacaoInicial(qtd):
     return [criaIndividuo() for x in range (0,qtd)]
@@ -75,12 +70,14 @@ def evolucao(pop):
         parentes = []
         totalFitnessPop = sum(fitness(individuo) for individuo in parentesIniciais)
         probIndividuos = [fitness(individuo)/totalFitnessPop for individuo in parentesIniciais]
-        escolhidos = numpy.zeros(len(parentesIniciais))
-        while len(parentes) < paisTamanho:
-            for individuos,x in enumerate(probIndividuos):
-                if numpy.random.random_sample() < individuos:
-                    escolhidos[int(x)] = 1
-                    parentes.append(parentesIniciais[int(x)])
+        while (len(parentes) < paisTamanho):
+            atualSelec = 0
+            for idx,p in enumerate(parentesIniciais):
+                pick = random.uniform(0,totalFitnessPop)
+                atualSelec+= probIndividuos[idx]
+                if atualSelec > pick:
+                    parentes.append(p)
+
     # Aplica mutação na população
     for p in parentes:
         if porcentagemMutacao > random.random():
