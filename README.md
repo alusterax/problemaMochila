@@ -29,3 +29,5 @@ Ao usar uma porcentagem de mutação maior, de 10%, a quantidade de variações 
 
 O processo de mutação foi configurado de forma simples, onde ao encontrar um invidíduo para mutar, ele altera uma posição do array do gene desse indivíduo de 0 para 1, ou 1 para 0.
 Ao aumentar a quantidade da população, a qualidade dos resultados melhora, mas o método da roleta perde muita performance comparado ao elitista, logo, se for utilizar uma população maior, é melhor ficar com o método elitista.
+
+Processo de Reprodução: 60% dos indivíduos são escolhidos aleatóriamente (independente do seu fitness) para entrar no processo de reprodução. Caso o método escolhido seja elitista, desses 60%, vão ser escolhidos os 80% com melhores pontuações. Caso seja o método da roleta, são escolhidos 80% dos indivíduos baseado em probabilidades, onde a sua chance de ser escolhido é de fitness/fitnessTotal da população, até que a cota de 80% de indivíduos seja preenchida.
