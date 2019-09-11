@@ -4,7 +4,8 @@ Resolução de problema da Mochila (knapsack problem) usando algoritmo genético
 
 
 
-Resultados:
+Resultados: 3 execuções, 100 População, 200 Gerações, Mutação: 3%.
+
 Método Elitista
 ![](images/img1.PNG)
 ![](images/img2.PNG)
