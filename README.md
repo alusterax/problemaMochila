@@ -1,7 +1,7 @@
 # problemaMochila
 Resolução de problema da Mochila (knapsack problem) usando algoritmo genético, implementado em python.
 
-O repositório possui um arquivo notebook do Jupyter para testes.
+O repositório possui um arquivo notebook do Jupyter para testes (geração de gráficos e afins).
 
 Resultados: 3 execuções, 100 População, 200 Gerações, Mutação: 3%.
 
